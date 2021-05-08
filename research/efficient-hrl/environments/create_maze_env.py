@@ -24,6 +24,36 @@ from tf_agents.environments import tf_py_environment
 
 @gin.configurable
 def create_maze_env(env_name=None, top_down_view=False):
+  if env_name == 'Lift':
+    print("Setting up lift env...")
+    import robosuite as suite
+    from robosuite.wrappers.gym_wrapper import GymWrapper
+    from robosuite import load_controller_config
+    controller_config = load_controller_config(default_controller='OSC_POSITION_YAW')
+    obs_keys = ['robot0_eef_pos', 'robot0_eef_quat', 'robot0_gripper_qpos', 'robot0_gripper_qvel'] + ['object-state']
+    skill_config = dict(
+        skills=['ll'],
+        base_config=dict(
+            reach_global=True,
+        ),
+    )
+    env = GymWrapper(
+        suite.make(
+            env_name="Lift",  # "Lift" try with other tasks like "Stack" and "Door"
+            robots="Panda",  # try with other robots like "Sawyer" and "Jaco"
+            has_renderer=False,
+            has_offscreen_renderer=False, #False,
+            use_camera_obs=False,
+            controller_configs=controller_config,
+
+            skill_config=skill_config,
+            hard_reset=False,
+        ),
+        keys=obs_keys,
+    )
+    wrapped_env = gym_wrapper.GymWrapper(env)
+    return wrapped_env
+
   n_bins = 0
   manual_collision = False
   if env_name.startswith('Ego'):

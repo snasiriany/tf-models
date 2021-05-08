@@ -96,3 +96,6 @@ ENV/
 
 # For mac
 .DS_Store
+
+# mujoco related files
+MUJOCO_LOG.TXT
