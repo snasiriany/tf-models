@@ -1,9 +1,9 @@
 #-*-Python-*-
-CONTEXT_RANGE_MIN = (-0.50, -0.50, -0.50, -0.25, -1.0, -0.25, -0.05, -0.05, -0.05, -0.50, -0.50,    -0.50, -0.50, -0.50, -1.5, -1.5, -1.5, -1.5, -0.50, -0.50, -0.50)
-CONTEXT_RANGE_MAX = (0.50, 0.50, 0.50, 0.25, 1.0, 0.25, 0.05, 0.05, 0.05, 0.50, 0.50,     0.50, 0.50, 0.50, 1.5, 1.5, 1.5, 1.5, 0.50, 0.50, 0.50)
-SUBGOAL_DIM = 21
+CONTEXT_RANGE_MIN = (-0.50, -0.50, -0.50, -0.25, -1.0, -0.25, -0.05, -0.05, -0.05, -0.50, -0.50)
+CONTEXT_RANGE_MAX = (0.50, 0.50, 0.50, 0.25, 1.0, 0.25, 0.05, 0.05, 0.05, 0.50, 0.50)
+SUBGOAL_DIM = 11
 
-create_maze_env.env_name = "Lift"
+create_maze_env.env_name = "Reach"
 ZERO_OBS = False
 context_range = (%CONTEXT_RANGE_MIN, %CONTEXT_RANGE_MAX)
 meta_context_range = ((), ())

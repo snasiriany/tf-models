@@ -151,6 +151,10 @@ def collect_experience(tf_env, agent, meta_agent, state_preprocess,
            state_repr, next_state_repr],
           mode='explore', meta_action_fn=meta_action_fn)
       context_reward, meta_reward = collect_experience_ops
+      meta_reward = uvf_utils.tf_print(
+            meta_reward, [context_reward, meta_reward],
+            message='reward_expl:',
+            name='reward_expl')
       collect_experience_ops = list(collect_experience_ops)
       collect_experience_ops.append(
           update_episode_rewards(tf.reduce_sum(context_reward), meta_reward,
@@ -190,8 +194,16 @@ def collect_experience(tf_env, agent, meta_agent, state_preprocess,
       meta_reward = tf.reshape(meta_reward, reward.shape)
 
     reward = 0.1 * meta_reward
+
+    reward_for_meta = reward_var + reward
+    reward_for_meta = uvf_utils.tf_print(
+      reward_for_meta, [reward_for_meta],
+      message='reward_for_meta:',
+      name='reward_for_meta')
+
     meta_transition = [state_var, meta_action_var,
-                       reward_var + reward,
+                       #reward_var + reward,
+                       reward_for_meta,
                        discount * (1 - tf.to_float(next_reset_episode_cond)),
                        next_state]
     meta_transition.extend([states_var, actions])
